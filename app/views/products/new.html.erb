@@ -24,7 +24,18 @@
 <script type="text/javascript" charset="utf-8">
   $(function() {
     $('form').submit(function(event) {
-      
+      //prevent form from submitting the default way
+      event.preventDefault();
+
+      var values = $(this).serialize();
+      var product = $.post('/products', values);
+
+      product.done(function(data) {
+        $("#productName").text(data["title"]);
+        $("#productPrice").text(data["price"]);
+        $("#productDescription").text(data["description"]);
+        $("#productInventory").text(data["inventory"]);
+      });
     });
   });
 
